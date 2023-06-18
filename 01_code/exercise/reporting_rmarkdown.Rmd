@@ -3,9 +3,6 @@ title: "Reporting with RMarkdown"
 author: "Joschka Schwarz"
 date: "9/15/2020"
 output:
-  pdf_document:
-    toc: yes
-    toc_depth: '2'
   html_document:
     code_folding: none
     df_print: paged
@@ -14,6 +11,9 @@ output:
     theme: flatly
     toc: yes
     toc_depth: 2
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
 ---
 
 ```{r setup, include=FALSE}
@@ -136,9 +136,9 @@ Read in data and print to HTML. Notice effect of `df_print: paged` option for HT
 
 ```{r}
 # Bike data
-bikes_tbl      <- readRDS(paste(rprojroot::find_rstudio_root_file(),"/01_data/bikes_tbl.rds", sep=""))
-bikeshops_tbl  <- readRDS(paste(rprojroot::find_rstudio_root_file(),"/01_data/bikeshops_tbl.rds", sep=""))
-orderlines_tbl <- readRDS(paste(rprojroot::find_rstudio_root_file(),"/01_data/orderlines_tbl.rds", sep=""))
+bikes_tbl      <- readRDS(paste(rprojroot::find_rstudio_root_file(),"/data/bikes_tbl.rds", sep=""))
+bikeshops_tbl  <- readRDS(paste(rprojroot::find_rstudio_root_file(),"/data/bikeshops_tbl.rds", sep=""))
+orderlines_tbl <- readRDS(paste(rprojroot::find_rstudio_root_file(),"/data/orderlines_tbl.rds", sep=""))
 
 bike_orderlines_tbl <- orderlines_tbl %>%
     left_join(bikes_tbl,     by = c("product_id" = "bike_id")) %>%

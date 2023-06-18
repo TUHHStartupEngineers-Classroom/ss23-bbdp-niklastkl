@@ -6,9 +6,9 @@ library(sf)
 
 
 # Bike data
-bikes_tbl      <- readRDS("01_data/bikes_tbl.rds")
-bikeshops_tbl  <- readRDS("01_data/bikeshops_tbl.rds")
-orderlines_tbl <- readRDS("01_data/orderlines_tbl.rds")
+bikes_tbl      <- readRDS("data/bikes_tbl.rds")
+bikeshops_tbl  <- readRDS("data/bikeshops_tbl.rds")
+orderlines_tbl <- readRDS("data/orderlines_tbl.rds")
 
 bike_orderlines_tbl <- orderlines_tbl %>%
   left_join(bikes_tbl,     by = c("product_id" = "bike_id")) %>%
