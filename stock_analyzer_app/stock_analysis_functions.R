@@ -49,11 +49,13 @@ get_symbol_from_user_input <-
 function(user_input){
   user_input %>% stringr::str_split(pattern=", ") %>% purrr::pluck(1, 1)
 }
+
 get_stock_data <-
 function(stock_symbol, 
                            from = today() - days(180), 
                            to   = today(), 
                            mavg_short = 20, mavg_long = 50) {
+  
   stock_symbol %>% quantmod::getSymbols(
   src         = "yahoo", 
   from        = from, 

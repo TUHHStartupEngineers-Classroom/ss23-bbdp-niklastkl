@@ -183,7 +183,7 @@ generate_commentary(stock_data_tbl, user_input = user_input)
 
 "ADS.DE, Adidas" %>% 
   get_symbol_from_user_input() %>%
-  get_stock_data(from = from, to = to) %>%
+  get_stock_data(from = today() - days(180), to = today()) %>%
   # plot_stock_data() #%>%
   generate_commentary(user_input = "ADS.DE, Adidas")
 

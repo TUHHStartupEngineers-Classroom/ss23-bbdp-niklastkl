@@ -1,0 +1,14 @@
+name: stock_analyzer_app
+title: stock_analyzer_app
+username:
+account: niklasbbdp
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 9358415
+bundleId: 7383988
+url: https://niklasbbdp.shinyapps.io/stock_analyzer_app/
+when: 1687638200.55858
+lastSyncTime: 1687638200.55861
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: stock_analysis.R

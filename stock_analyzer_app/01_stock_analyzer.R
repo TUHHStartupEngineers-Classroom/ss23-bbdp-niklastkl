@@ -15,6 +15,7 @@ library(tidyverse)
 
 library(rvest)
 library(glue)
+library(zoo)
 
 source(file = "stock_analysis_functions.R")
 
@@ -42,16 +43,6 @@ ui <- fluidPage(title = "Stock Analyzer",
                         select = "DAX"
                         ),
             uiOutput("indices"),            
-            # pickerInput(inputId = "stock_selection",
-            #             label="Stocks",
-            #             choices = stock_list_tbl$label,
-            #             options = list(
-            # multiple=F,
-            # actionsBox = FALSE,
-            # liveSearch = TRUE,
-            # size = 10
-            #             )
-            # ),
             dateRangeInput(inputId = "date_range", 
                            label   = h4("Date Range"), 
                            start   = today() - 180, 
@@ -124,11 +115,15 @@ server <- function(input, output, session) {
   })
   
   stock_symbol <- eventReactive(ignoreNULL = FALSE, input$analyze, {
-    input$stock_selection
+    if(is.null(input$stock_selection) ){
+      return(stock_list_tbl() %>% purrr::pluck("label") %>% purrr::pluck(1)
+      )}
+    else{
+    return(input$stock_selection)
+    }
   })
   
   stock_data_tbl <- reactive({
-    
     stock_symbol() %>%
       get_symbol_from_user_input %>%
       get_stock_data(from = input$date_range[1],

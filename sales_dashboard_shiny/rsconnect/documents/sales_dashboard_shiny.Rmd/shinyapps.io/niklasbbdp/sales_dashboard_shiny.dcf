@@ -5,9 +5,9 @@ account: niklasbbdp
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 9328756
-bundleId: 7359774
+bundleId: 7384120
 url: https://niklasbbdp.shinyapps.io/sales_dashboard_shiny/
-when: 1687115783.27895
-lastSyncTime: 1687115783.27897
+when: 1687643449.00152
+lastSyncTime: 1687643449.00155
 asMultiple: FALSE
 asStatic: FALSE

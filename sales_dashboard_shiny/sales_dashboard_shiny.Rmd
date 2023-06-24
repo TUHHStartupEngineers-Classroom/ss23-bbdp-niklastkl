@@ -184,6 +184,32 @@ observeEvent(eventExpr = input$reset, handlerExpr = {
 
 Column {data-width=1000}
 ---------------------------------------------------------------
+### Total Sales
+```{r}
+valueBoxOutput("total_sales")
+
+```
+
+```{r}
+total_sales_reactive <- reactive({
+ bike_orderlines_tbl %>%
+    dplyr::filter(category_1 %in% input$bike_type_group) %>%
+    dplyr::filter(category_2 %in% input$bike_family_group) %>%
+    dplyr::filter(order_date > input$date_range[1]) %>%
+    dplyr::filter(order_date < input$date_range[2]) %>%
+    dplyr::select(total_price) %>%
+    summarise(total_sales = sum(total_price)) %>% pull()
+})
+```
+
+```{r}
+output$total_sales <- renderValueBox({valueBox(caption="Total Sales", 
+                                                   value = format_to_euro(total_sales_reactive()),
+                                                  color="success",
+                                                   icon = "fa-euro-sign")})
+
+```
+
 
 ### By State
 ```{r}
@@ -228,6 +254,26 @@ output$map_plot <- renderPlotly({
 
 Column {data-width=1000}
 ---------------------------------------------------------------
+### Average Price
+```{r}
+valueBoxOutput("average_price")
+
+average_price_reactive <- reactive({
+ bike_orderlines_tbl %>%
+    dplyr::filter(category_1 %in% input$bike_type_group) %>%
+    dplyr::filter(category_2 %in% input$bike_family_group) %>%
+    dplyr::filter(order_date > input$date_range[1]) %>%
+    dplyr::filter(order_date < input$date_range[2]) %>%
+    dplyr::select(total_price) %>%
+    summarise(average = mean(total_price))  %>% pull()
+})
+
+output$average_price <- renderValueBox({valueBox("Average Price",
+                                                    value = format_to_euro(average_price_reactive()),
+                                                   #subtitle="Mean price of chosen group",
+                                                   icon = "fa-money")})
+
+```
 
 ### Over Time
 ``` {r}
