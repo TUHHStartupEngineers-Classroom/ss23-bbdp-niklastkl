@@ -1,0 +1,127 @@
+---
+title: "Sales Report"
+author: "Niklas Trekel"
+date: "06/17/2023"
+output:
+  html_document:
+    code_folding: none
+    df_print: paged
+    highlight: tango
+    number_sections: yes
+    theme: flatly
+    toc: yes
+    toc_depth: 2
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+    echo = TRUE,
+    eval = TRUE,
+    message = FALSE,
+    warning = FALSE,
+    dpi = 300,
+    fig.align = "center"
+    )
+
+knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
+
+source("plot_sales.R")
+# See Options: knitr::opts_chunk$get()
+```
+
+
+```{r, echo=FALSE}
+
+# eval = FALSE (Show code, but don't run, no output)
+# echo = FALSE (Don't show code, but run, show output)
+# results = "hide" (Show code, and run, but don't show output)
+
+# Load Libraries
+library(tidyverse)
+library(plotly)
+```
+
+
+```{r, echo=FALSE}
+# Load the data
+bikes_tbl      <- readRDS("data/bikes_tbl.rds")
+bikeshops_tbl  <- readRDS("data/bikeshops_tbl.rds")
+orderlines_tbl <- readRDS("data/orderlines_tbl.rds")
+
+bike_orderlines_tbl <- orderlines_tbl %>%
+    left_join(bikes_tbl,     by = c("product_id" = "bike_id")) %>%
+    left_join(bikeshops_tbl, by = c("customer_id" = "bikeshop_id")) %>%
+    mutate(total_price = price_euro * quantity)
+```
+
+
+# Total Sales Charts{.tabset .tabset-fade .tabset-pills}
+
+## Quarterly Sales Trends
+  ```{r, echo=FALSE}
+  plot_total_sales(unit = "quarter", date_format = "%B %Y", interactive = FALSE)
+  ```  
+
+
+
+## Monthly Sales Trends
+  ```{r, echo=FALSE}
+  plot_total_sales(unit = "month", date_format = "%B %Y", interactive = FALSE)
+  ```
+
+
+## Weekly Sales Trends
+  ```{r, echo=FALSE}
+  plot_total_sales(unit = "week", date_format = "%B %d, %Y", interactive = FALSE)
+  ```
+
+# Category Sales Charts{.tabset .tabset-fade .tabset-pills}
+
+## Road{.tabset .tabset-fade .tabset-pills}
+### Quarterly
+```{r, echo=FALSE}
+plot_categories("Road", "All", "quarter", "%B %Y", 1, "free_y",
+                            FALSE)
+
+```
+
+### Monthly
+```{r, echo=FALSE}
+plot_categories("Road", "All", "month", "%B %Y", 1, "free_y",
+                            FALSE)
+
+```
+
+### Weekly
+```{r, echo=FALSE}
+plot_categories("Road", "All", "week", "%B %d %Y", 1, "free_y",
+                            FALSE)
+
+```
+
+## Mountain{.tabset .tabset-fade .tabset-pills}
+### Quarterly
+```{r, echo=FALSE}
+plot_categories("Mountain", "All", "quarter", "%B %Y", 1, "free_y",
+                            FALSE)
+
+```
+
+### Monthly
+```{r, echo=FALSE}
+plot_categories("Mountain", "All", "month", "%B %Y", 1, "free_y",
+                            FALSE)
+
+```
+
+### Weekly
+```{r, echo=FALSE}
+plot_categories("Mountain", "All", "week", "%B %d %Y", 1, "free_y",
+                            FALSE)
+
+```
+
+
